@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <style>
+            h1 {
+              text-align: center;
+            }
+        </style>
         <title>
             Trying MNIST models
         </title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
     </head>
+
     <body>
         <h1>
             Classifying digits using different models
         </h1>
-    </body>
 
-    <div class="dropdown">
-        <button class="dropbtn">Dropdown</button>
-        <div class="dropdown-content">
-          <a href="#">Support Vector Machine</a>
-          <a href="#">Convolutional Neural Net</a>
+        <div class="dropdown">
+            <button class="dropbtn">Dropdown</button>
+            <div class="dropdown-content">
+                <a href="#">Support Vector Machine</a>
+                <a href="#">Convolutional Neural Net</a>
+            </div>
         </div>
-      </div>
+
+        <!-- <img src="{{url_for('static', filename='placeholder.png')}}" alt="Upload an image of a digit" width="500" height="auto" class="centerImage" /> -->
+        <img src="{{url_for('static', filename=image_path)}}" alt="Upload an image of a digit" width="500" height="auto" class="centerImage" />
+        
+        <form method="post" enctype="multipart/form-data">
+            {{form.hidden_tag()}}
+            {{form.file_upload()}}
+            {{form.submit()}}
+            <!-- <input type=file name=file> -->
+            <!-- <input type=submit value=Upload> -->
+        </form>
+    </body>
 </html>
