@@ -1,0 +1,9 @@
+*.drawio
+*.drawio.bkp
+.vscode
+.venv
+*__pycache__*
+
+*.pkl
+
+test.ipynb
