@@ -5,5 +5,8 @@
 *__pycache__*
 
 *.pkl
+*.DS_STORE*
 
 test.ipynb
+
+src/flask/static/*.png
