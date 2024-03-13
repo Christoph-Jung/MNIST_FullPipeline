@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template, request
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import FileField, SubmitField
@@ -10,6 +10,8 @@ import config
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
+MODELS = ["SVM", "CNN", "Bayes"]
+MODEL_INDEX = 0
 
 
 class UploadFile(FlaskForm):
@@ -38,7 +40,24 @@ def model():
     else:
         filename = "placeholder.png"
     print(f"Current image path: {filename}")
-    return render_template('index.html', form=form, image_path=filename)
+    tmp_models = MODELS.copy()
+    tmp_models.remove(tmp_models[MODEL_INDEX])
+    print(f"Current model: {MODELS[MODEL_INDEX]}")
+    print(f"Rest: {tmp_models}")
+    return render_template('index.html',
+                           form=form,
+                           image_path=filename,
+                           models=tmp_models,
+                           current_model=MODELS[MODEL_INDEX])
+
+
+@app.route('/dropdown', methods=['POST'])
+def drop():
+    global MODEL_INDEX
+    dropdownval = request.form.get('Models')
+    MODEL_INDEX = MODELS.index(dropdownval)
+    print(dropdownval)
+    return redirect("/model", code=302)
 
 
 def main():
