@@ -10,3 +10,4 @@
 test.ipynb
 
 src/flask/static/*.png
+*.png
