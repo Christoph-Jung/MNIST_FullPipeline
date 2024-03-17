@@ -1,4 +1,5 @@
 import os
+import sys
 from flask import Flask, redirect, render_template, request
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
@@ -6,12 +7,22 @@ from wtforms import FileField, SubmitField
 from wtforms.validators import InputRequired
 from werkzeug.utils import secure_filename
 
+
 import config
+from .. import models as models
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+
+print(f"Current working dir: {os.getcwd()}")
+CURRENT_MODEL = models.svm.MnistSvm()
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
 MODELS = ["SVM", "CNN", "Bayes"]
 MODEL_INDEX = 0
+CLASSIFYING_RESULT = "STUFF"
 
 
 class UploadFile(FlaskForm):
@@ -48,7 +59,8 @@ def model():
                            form=form,
                            image_path=filename,
                            models=tmp_models,
-                           current_model=MODELS[MODEL_INDEX])
+                           current_model=MODELS[MODEL_INDEX],
+                           result=CLASSIFYING_RESULT)
 
 
 @app.route('/dropdown', methods=['POST'])
@@ -57,6 +69,7 @@ def drop():
     dropdownval = request.form.get('Models')
     MODEL_INDEX = MODELS.index(dropdownval)
     print(dropdownval)
+    print(CURRENT_MODEL.print_stuff())
     return redirect("/model", code=302)
 
 

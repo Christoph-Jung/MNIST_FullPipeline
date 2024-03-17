@@ -7,6 +7,9 @@
             h1 {
               text-align: center;
             }
+            p {
+              text-align: center;
+            }
         </style>
         <title>
             Trying MNIST models
@@ -19,23 +22,26 @@
             Classifying digits using different models
         </h1>
 
-        <form method="POST" action="/dropdown">
+        <form method="POST" action="/dropdown" style="text-align:center; margin-bottom:1cm">
             <select name="Models">
             <option value="{{current_model}}" selected>{{current_model}}</option>
             {% for model in models %}
                 <option value="{{model}}">{{model}}</option>
             {% endfor %}
-
             </select>
             <input type="submit" value ="Submit">
         </form>
 
         <img src="{{url_for('static', filename=image_path)}}" alt="Upload an image of a digit" width="500" height="auto" class="centerImage" />
         
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" style="text-align:center">
             {{form.hidden_tag()}}
             {{form.file_upload()}}
             {{form.submit()}}
         </form>
+
+        <p>
+            Das ist ein Test mit Ergebnis {{result}}
+        </p>
     </body>
 </html>
